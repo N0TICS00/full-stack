@@ -26,7 +26,8 @@ class AuthController extends Controller
             'token' => $token,
         ];
         $user->save();
-        return redirect()->route("/courses");
+
+        return redirect()->route("/api/overview");
     }
     public function login(Request $req){
         $fields = $req->validate([

@@ -1,7 +1,7 @@
 <section id="navbar">
 <nav class="navbar navbar-dark navbar-expand-lg">
   <div class="container-fluid container">
-    <a class="navbar-brand user-name ">Hi, {{session('user')['name']}}</a>
+    <a class="navbar-brand user-name ">Hi, <!-- --></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

@@ -8,11 +8,12 @@ use App\Http\Controllers\AuthController;
 //Public Routes
 Route::post('/register', [AuthController::class, 'register']);
 Route::post("/login", [AuthController::class, 'login']);
+// Route::post("/news", [LoginController::class, "newsletterSignup"]);
 
 //Protected Routes
 Route::group(['middleware' => ['auth:sanctum']], function(){
-    Route::get('/courses', function(){
-        return view("membership/courses/html-css");
+    Route::get('/overview', function(){
+        return view("membership/overview");
     });
     Route::post("/logout", [AuthController::class, 'logout']);
 });
