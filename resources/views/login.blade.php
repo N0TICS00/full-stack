@@ -21,9 +21,12 @@
             </label>
             </p>
             <div class="buttons">
+            <p>
             <button type="submit" class="btn">Login</button>
+            <p>or</p>
+            <a href="/login">Back to Home</a>
+            </p>
             </div>
-        </form>
     </div>
 </section>
 </div>

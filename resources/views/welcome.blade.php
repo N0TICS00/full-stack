@@ -170,7 +170,7 @@
     <h1>Subscribe to our platform </h1>
     @include("partials.flash")
     <div class="form-div">
-        <form action="/api/register" method="POST">
+        <form action="/register" method="POST">
             @csrf
             <p>
             <label>
@@ -190,12 +190,6 @@
                 <input type="password" name="password" class="form" required>
             </label>
             
-            </p>
-            <p>
-            <label>
-                <h5>Password Confirmation</h5>
-                <input type="password" name="password_confirmation" class="form" required>
-            </label>
             </p>
             <div class="buttons">
             <p>

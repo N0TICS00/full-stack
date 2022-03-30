@@ -6,53 +6,39 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {   
     public function register(Request $req){
-        
-        $fields = $req->validate([
-            'name' => 'required|string',
-            'email' => 'required|string|unique:users,email',
-            'password' => 'required|string|confirmed',
-        ]);
-        $user = User::Create([
-            'name' => $fields['name'],
-            'email' => $fields['email'],
-            'password' => bcrypt($fields['password']),
-        ]);
-        $token = $user->createToken('myapptoken')->plainTextToken;
-        $response =[
-            'user' =>$user,
-            'token' => $token,
-        ];
+        $data = $req->input();
+        $user = User::create($data);
+        $user->password= Hash::make($data['password']);
         $user->save();
-
-        return redirect()->route("/api/overview");
+        $req->session()->put("user", $user);
+        return redirect()->to('/overview');
     }
     public function login(Request $req){
-        $fields = $req->validate([
-            'email' => 'required|string',
-            'password' => 'required|string',
-        ]);
-
-        $user = User::where('email', $fields['email'])->first();
-        if(!$user || !Hash::check($fields['password'], $user->password)){
-            return response([
-                'message' => "Bads Creds",
-            ], 401);
+        $userInfo = User::where("email", "0", $req->email)->first();
+        if(!$userInfo){
+            return redirect("/login")->with("error", "Wrong Password or Wrong Email");
         }
-        
-        $token = $user->createToken('myapptoken')->plainTextToken;
-        $response =[
-            'user' =>$user,
-            'token' => $token,
-        ];
-        return response($response, 201);
+        else{
+            if(Hash::check($req->password, $userInfo->password)){
+                $req->session()->put("user", $user);
+                return redirect("/overview");
+            }
+            else{
+                return redirect("/login")->with("error", "Wrong Password or Wrong Email");
+            };
+        };
     }
     public function logout(Request $req){
-        auth()->user()->tokens()->delete();
-        return [
-            'message' => 'Logged Out',
-        ];
+        Auth::logout();
+ 
+        session()->pull('user');;
+     
+        session()->regenerateToken();
+        
+        return redirect('/');
     }
 }
