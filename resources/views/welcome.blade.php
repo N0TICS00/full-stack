@@ -43,10 +43,10 @@
 <section id="discover">
   @include('partials.flash')
   <h2>Discover all about our courses</h2>
-  <form method="POST" action="/news">
+  <form action="/news" method="POST" >
     @csrf
     <p>Subscribe to our newsletter! </p>
-    <input class="form" type="email" required>
+    <input class="form" type="email" name="email" required>
     <p>
     <button class="btn" type="submit">Submit</button>
     </p>

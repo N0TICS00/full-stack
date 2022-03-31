@@ -17,7 +17,7 @@ class CustomAuth
     public function handle(Request $request, Closure $next)
     {
         $path = $request->path();
-        if(($path == "overview" || $path == "logout") && (!Session::get('user'))){
+        if(($path == "overview" || $path == "logout" || $path == "faq" || $path == "courses/1" || $path == "courses/2") && (!Session::get('user'))){
             return redirect('/');
         };
         return $next($request);
